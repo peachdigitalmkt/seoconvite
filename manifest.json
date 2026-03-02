@@ -1,0 +1,24 @@
+{
+  "name": "SeoConvite - Acompanhamento",
+  "short_name": "SeoConvite",
+  "description": "Acompanhe o andamento do seu convite digital",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#962c1e",
+  "theme_color": "#962c1e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://cdn.abacus.ai/images/f95e37f6-8d54-4271-8daf-587c8bc0c932.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn.abacus.ai/images/f95e37f6-8d54-4271-8daf-587c8bc0c932.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
