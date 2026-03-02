@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  
+  <!-- Meta Tags PWA - Comportamento de App Nativo -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="SeoConvite">
+  <meta name="theme-color" content="#962c1e">
+  <meta name="description" content="Acompanhe o andamento do seu convite digital SeoConvite">
+  
+  <!-- Ícones PWA -->
+  <link rel="icon" type="image/png" sizes="192x192" href="https://cdn.abacus.ai/images/f95e37f6-8d54-4271-8daf-587c8bc0c932.png">
+  <link rel="apple-touch-icon" href="https://cdn.abacus.ai/images/f95e37f6-8d54-4271-8daf-587c8bc0c932.png">
+  
+  <!-- Manifesto PWA -->
+  <link rel="manifest" href="manifest.json">
+  
+  <title>SeoConvite - Acompanhamento</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      font-size: 16px;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #962c1e 0%, #7a2318 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      /* Suporte ao notch do iPhone */
+      padding-top: max(15px, env(safe-area-inset-top));
+      padding-bottom: max(15px, env(safe-area-inset-bottom));
+      padding-left: max(15px, env(safe-area-inset-left));
+      padding-right: max(15px, env(safe-area-inset-right));
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 550px;
+    }
+    
+    .logo-container {
+      text-align: center;
+      margin-bottom: 25px;
+      animation: fadeInDown 0.8s ease;
+    }
+    
+    .logo {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border-radius: 50%;
+      padding: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    
+    .logo-text {
+      color: #FFFFFF;
+      font-size: 26px;
+      font-weight: 700;
+      margin-top: 15px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      letter-spacing: 1px;
+    }
+    
+    .card {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: fadeInUp 0.8s ease;
+    }
+    
+    h1 {
+      color: #962c1e;
+      font-size: 24px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    
+    .subtitle {
+      color: #718096;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 25px;
+      font-weight: 300;
+    }
+    
+    .input-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      color: #2d3748;
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    
+    input {
+      width: 100%;
+      padding: 16px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #962c1e;
+      box-shadow: 0 0 0 4px rgba(150, 44, 30, 0.1);
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #962c1e 0%, #7a2318 100%);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(150, 44, 30, 0.4);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .btn:disabled {
+      background: #cbd5e0;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .btn-whatsapp {
+      background: #25D366;
+      margin-top: 15px;
+    }
+    
+    .btn-whatsapp:hover {
+      background: #20ba5a;
+      box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+    }
+    
+    .btn-voltar {
+      background: #f7fafc;
+      color: #2d3748;
+      border: 2px solid #e2e8f0;
+      margin-top: 15px;
+    }
+    
+    .btn-voltar:hover {
+      background: #edf2f7;
+      box-shadow: none;
+    }
+    
+    .loading {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .spinner {
+      border: 3px solid #f3f4f6;
+      border-top: 3px solid #962c1e;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+    
+    .resultado {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .info-card {
+      background: linear-gradient(135deg, #962c1e 0%, #7a2318 100%);
+      border-radius: 16px;
+      padding: 25px;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(150, 44, 30, 0.3);
+    }
+    
+    .cliente-nome {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .cliente-contato {
+      font-size: 14px;
+      opacity: 0.95;
+      margin-bottom: 5px;
+    }
+    
+    .tipo-convite {
+      display: inline-block;
+      background: #cfab5c;
+      color: #2d3748;
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 12px;
+    }
+    
+    .detalhes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .detalhe-item {
+      background: #f7fafc;
+      border-radius: 12px;
+      padding: 16px;
+      border-left: 4px solid #962c1e;
+    }
+    
+    .detalhe-label {
+      font-size: 12px;
+      color: #718096;
+      font-weight: 500;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .detalhe-valor {
+      font-size: 17px;
+      color: #2d3748;
+      font-weight: 600;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    
+    .status-aguardando {
+      background: #fed7d7;
+      color: #c53030;
+    }
+    
+    .status-criacao {
+      background: #feebc8;
+      color: #c05621;
+    }
+    
+    .status-aprovacao {
+      background: #bee3f8;
+      color: #2c5282;
+    }
+    
+    .status-entregue {
+      background: #c6f6d5;
+      color: #22543d;
+    }
+    
+    .aviso-importante {
+      background: #fff5f5;
+      border: 2px solid #fc8181;
+      border-radius: 12px;
+      padding: 16px;
+      margin: 20px 0;
+      display: flex;
+      align-items: start;
+      gap: 12px;
+    }
+    
+    .aviso-icone {
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+    
+    .aviso-texto {
+      font-size: 14px;
+      color: #742a2a;
+      line-height: 1.6;
+    }
+    
+    .link-convite {
+      background: #f7fafc;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .link-convite a {
+      color: #962c1e;
+      text-decoration: none;
+      font-weight: 600;
+      word-break: break-all;
+      font-size: 15px;
+    }
+    
+    .link-convite a:hover {
+      text-decoration: underline;
+    }
+    
+    .observacoes {
+      background: #fffaf0;
+      border-left: 4px solid #cfab5c;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    
+    .observacoes-titulo {
+      font-size: 13px;
+      color: #7c2d12;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .observacoes-texto {
+      font-size: 15px;
+      color: #744210;
+      line-height: 1.6;
+    }
+    
+    .erro {
+      background: #fff5f5;
+      color: #c53030;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      margin-top: 20px;
+      border-left: 4px solid #c53030;
+      animation: shake 0.5s ease;
+      font-size: 15px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+    
+    /* ========================================
+       RESPONSIVIDADE MOBILE - PROPORÇÕES EXATAS
+       Baseado nas imagens "expectativa"
+       Card ocupa 92% da tela (4% padding de cada lado)
+       ======================================== */
+    @media (max-width: 768px) {
+      /* Body com padding mínimo (4% de cada lado) */
+      body {
+        padding: 0 4vw;
+        padding-top: max(4vw, env(safe-area-inset-top));
+        padding-bottom: max(4vw, env(safe-area-inset-bottom));
+      }
+      
+      /* Container sem limite */
+      .container {
+        width: 100%;
+        max-width: 100%;
+      }
+      
+      /* Logo container */
+      .logo-container {
+        margin-bottom: 3vw;
+      }
+      
+      /* Logo: 20% da largura da tela */
+      .logo {
+        width: 20vw;
+        height: 20vw;
+        padding: 1.5vw;
+      }
+      
+      /* Texto "SeoConvite": 4.2% da tela */
+      .logo-text {
+        font-size: 4.2vw;
+        margin-top: 2vw;
+      }
+      
+      /* Card com padding proporcional */
+      .card {
+        padding: 4vw;
+        border-radius: 4vw;
+      }
+      
+      /* Título "Acompanhamento de Projeto": 4% da tela */
+      h1 {
+        font-size: 4vw;
+        margin-bottom: 1.5vw;
+      }
+      
+      /* Subtítulo: 2.5% da tela */
+      .subtitle {
+        font-size: 2.5vw;
+        margin-bottom: 4vw;
+      }
+      
+      /* Input group */
+      .input-group {
+        margin-bottom: 3vw;
+      }
+      
+      /* Label "E-mail": 2.5% da tela */
+      label {
+        font-size: 2.5vw;
+        margin-bottom: 1.5vw;
+      }
+      
+      /* Input: 3% da tela */
+      input {
+        padding: 3vw;
+        font-size: 3vw;
+        border-radius: 2vw;
+        border-width: 0.3vw;
+      }
+      
+      /* Botão: 3.2% da tela */
+      .btn {
+        padding: 3.5vw;
+        font-size: 3.2vw;
+        border-radius: 2vw;
+      }
+      
+      /* Card de informações do cliente */
+      .info-card {
+        padding: 4vw;
+        border-radius: 3vw;
+        margin-bottom: 3vw;
+      }
+      
+      /* Nome do cliente: 5% da tela */
+      .cliente-nome {
+        font-size: 5vw;
+        margin-bottom: 2vw;
+      }
+      
+      /* Email/telefone: 2.5% da tela */
+      .cliente-contato {
+        font-size: 2.5vw;
+        margin-bottom: 1vw;
+      }
+      
+      /* Badge tipo convite: 3% da tela */
+      .tipo-convite {
+        font-size: 3vw;
+        padding: 1.5vw 3vw;
+        margin-top: 2vw;
+        border-radius: 3vw;
+      }
+      
+      /* Grid de detalhes */
+      .detalhes-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5vw;
+        margin-bottom: 3vw;
+      }
+      
+      /* Item de detalhe */
+      .detalhe-item {
+        padding: 3vw;
+        border-radius: 2vw;
+        border-left-width: 0.8vw;
+      }
+      
+      /* Label dos detalhes: 2.2% da tela */
+      .detalhe-label {
+        font-size: 2.2vw;
+        margin-bottom: 1.5vw;
+      }
+      
+      /* Valor dos detalhes: 3.5% da tela */
+      .detalhe-valor {
+        font-size: 3.5vw;
+      }
+      
+      /* Badge de status: 3% da tela */
+      .status-badge {
+        font-size: 3vw;
+        padding: 1.5vw 3vw;
+        border-radius: 3vw;
+      }
+      
+      /* Aviso importante */
+      .aviso-importante {
+        padding: 3vw;
+        gap: 2vw;
+        border-radius: 2vw;
+        margin: 3vw 0;
+        border-width: 0.3vw;
+      }
+      
+      /* Ícone do aviso: 5% da tela */
+      .aviso-icone {
+        font-size: 5vw;
+      }
+      
+      /* Texto do aviso: 2.5% da tela */
+      .aviso-texto {
+        font-size: 2.5vw;
+        line-height: 1.5;
+      }
+      
+      /* Link do convite */
+      .link-convite {
+        padding: 3vw;
+        border-radius: 2vw;
+        margin-bottom: 3vw;
+      }
+      
+      .link-convite .detalhe-label {
+        font-size: 2.2vw;
+        margin-bottom: 2vw;
+      }
+      
+      .link-convite a {
+        font-size: 2.5vw;
+      }
+      
+      /* Observações */
+      .observacoes {
+        padding: 3vw;
+        border-radius: 2vw;
+        margin-bottom: 3vw;
+        border-left-width: 0.8vw;
+      }
+      
+      .observacoes-titulo {
+        font-size: 2.2vw;
+        margin-bottom: 1.5vw;
+      }
+      
+      .observacoes-texto {
+        font-size: 2.5vw;
+        line-height: 1.5;
+      }
+      
+      /* Erro */
+      .erro {
+        font-size: 2.5vw;
+        padding: 3vw;
+        border-radius: 2vw;
+        border-left-width: 0.8vw;
+      }
+      
+      /* Spinner */
+      .spinner {
+        width: 10vw;
+        height: 10vw;
+        border-width: 0.8vw;
+      }
+      
+      .loading p {
+        font-size: 2.5vw;
+        margin-top: 2vw;
+      }
+    }
+    
+    /* MOBILE PEQUENO (iPhone SE, etc) - Ajustes finos */
+    @media (max-width: 375px) {
+      body {
+        padding: 0 3vw;
+        padding-top: max(3vw, env(safe-area-inset-top));
+        padding-bottom: max(3vw, env(safe-area-inset-bottom));
+      }
+    }
+    
+    /* TABLETS - Mantém estilo desktop */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .container {
+        max-width: 600px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo -->
+    <div class="logo-container">
+      <div class="logo">
+        <img src="https://cdn.abacus.ai/images/f95e37f6-8d54-4271-8daf-587c8bc0c932.png" alt="SeoConvite Logo">
+      </div>
+      <div class="logo-text">SeoConvite</div>
+    </div>
+    
+    <!-- Card Principal -->
+    <div class="card">
+      <!-- Formulário de Consulta -->
+      <div id="formulario">
+        <h1>Acompanhamento de Projeto</h1>
+        <p class="subtitle">Consulte o andamento do seu convite</p>
+        
+        <div class="input-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" placeholder="seuemail@exemplo.com" autocomplete="email">
+        </div>
+        
+        <button class="btn" id="btnConsultar" onclick="consultarProjeto()">Consultar</button>
+        
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          <p style="margin-top: 10px; color: #718096;">Buscando dados...</p>
+        </div>
+        
+        <div id="erro"></div>
+      </div>
+      
+      <!-- Resultado -->
+      <div class="resultado" id="resultado">
+        <!-- Card de Informações do Cliente -->
+        <div class="info-card">
+          <div class="cliente-nome" id="clienteNome"></div>
+          <div class="cliente-contato" id="clienteEmail"></div>
+          <div class="cliente-contato" id="clienteNumero"></div>
+          <div class="tipo-convite" id="tipoConvite"></div>
+        </div>
+        
+        <!-- Status do Projeto -->
+        <div class="detalhe-item" style="margin-bottom: 20px;">
+          <div class="detalhe-label">Status do Projeto</div>
+          <div id="statusProjeto"></div>
+        </div>
+        
+        <!-- Grid de Detalhes -->
+        <div class="detalhes-grid">
+          <div class="detalhe-item">
+            <div class="detalhe-label">Valor Total</div>
+            <div class="detalhe-valor" id="valorTotal">R$ 0,00</div>
+          </div>
+          
+          <div class="detalhe-item">
+            <div class="detalhe-label">Valor Pago</div>
+            <div class="detalhe-valor" id="valorPago">R$ 0,00</div>
+          </div>
+          
+          <div class="detalhe-item">
+            <div class="detalhe-label">Status Pagamento</div>
+            <div class="detalhe-valor" id="statusPagamento">-</div>
+          </div>
+          
+          <div class="detalhe-item">
+            <div class="detalhe-label">Data de Início</div>
+            <div class="detalhe-valor" id="dataInicio">-</div>
+          </div>
+          
+          <div class="detalhe-item">
+            <div class="detalhe-label">Previsão Entrega</div>
+            <div class="detalhe-valor" id="previsaoEntrega">-</div>
+          </div>
+        </div>
+        
+        <!-- Aviso Importante -->
+        <div class="aviso-importante">
+          <div class="aviso-icone">⚠️</div>
+          <div class="aviso-texto">
+            <strong>IMPORTANTE:</strong> A produção do seu convite começará apenas quando o pagamento dos 50% for realizado.
+          </div>
+        </div>
+        
+        <!-- Link do Convite -->
+        <div class="link-convite" id="linkConviteContainer" style="display: none;">
+          <div class="detalhe-label" style="margin-bottom: 10px;">🔗 Seu Convite Digital</div>
+          <a href="#" id="linkConvite" target="_blank">Clique aqui para acessar</a>
+        </div>
+        
+        <!-- Observações -->
+        <div class="observacoes" id="observacoesContainer" style="display: none;">
+          <div class="observacoes-titulo">📝 Observações</div>
+          <div class="observacoes-texto" id="observacoes"></div>
+        </div>
+        
+        <!-- Botões -->
+        <button class="btn btn-whatsapp" onclick="abrirWhatsApp()">
+          💬 Falar com a SeoConvite
+        </button>
+        
+        <button class="btn btn-voltar" onclick="voltar()">
+          ← Nova Consulta
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // ============================================
+    // CONFIGURAÇÃO DA API (SUBSTITUA PELA SUA URL)
+    // ============================================
+    const API_URL = 'https://script.google.com/macros/s/SEU_DEPLOYMENT_ID/exec';
+    
+    console.log('Script carregado com sucesso!');
+    
+    // Registrar Service Worker para PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('Service Worker registrado:', reg))
+          .catch(err => console.log('Erro ao registrar Service Worker:', err));
+      });
+    }
+    
+    // Enter para consultar
+    document.getElementById('email').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        consultarProjeto();
+      }
+    });
+    
+    // Variáveis globais para armazenar dados do cliente
+    let dadosCliente = null;
+    
+    function consultarProjeto() {
+      console.log('Função consultarProjeto chamada!');
+      
+      const email = document.getElementById('email').value.trim();
+      console.log('Email digitado:', email);
+      
+      if (!email || email === "") {
+        mostrarErro('Por favor, digite um e-mail válido.');
+        return;
+      }
+      
+      // Validação básica de e-mail
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        mostrarErro('Por favor, digite um e-mail válido.');
+        return;
+      }
+      
+      console.log('Iniciando busca...');
+      document.getElementById('loading').style.display = 'block';
+      document.getElementById('erro').innerHTML = '';
+      document.getElementById('btnConsultar').disabled = true;
+      
+      // Chamar a API do Google Apps Script via fetch
+      console.log('Chamando API:', API_URL + '?email=' + encodeURIComponent(email));
+      
+      fetch(API_URL + '?email=' + encodeURIComponent(email))
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Erro na resposta da API: ' + response.status);
+          }
+          return response.json();
+        })
+        .then(dados => {
+          console.log('Sucesso! Dados recebidos:', dados);
+          exibirResultado(dados);
+        })
+        .catch(erro => {
+          console.error('Erro ao buscar dados:', erro);
+          mostrarErro('Erro ao buscar dados. Verifique sua conexão e tente novamente.');
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('btnConsultar').disabled = false;
+        });
+    }
+    
+    function exibirResultado(dados) {
+      console.log('Exibindo resultado:', dados);
+      
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('btnConsultar').disabled = false;
+      
+      if (dados.erro) {
+        mostrarErro(dados.erro);
+        return;
+      }
+      
+      // Armazenar dados globalmente
+      dadosCliente = dados.cliente;
+      console.log('Dados do cliente armazenados:', dadosCliente);
+      
+      // Exibir dados do cliente
+      document.getElementById('clienteNome').textContent = dadosCliente.nome || 'Cliente';
+      document.getElementById('clienteEmail').textContent = '📧 ' + (dadosCliente.email || '-');
+      document.getElementById('clienteNumero').textContent = '📱 ' + (dadosCliente.numero || '-');
+      document.getElementById('tipoConvite').textContent = dadosCliente.tipoConvite || 'Convite';
+      
+      // Status do Projeto com badge colorido
+      const statusProjeto = dadosCliente.statusProjeto || 'Aguardando';
+      let statusClass = 'status-aguardando';
+      
+      if (statusProjeto.toLowerCase().includes('criação') || statusProjeto.toLowerCase().includes('criacao')) {
+        statusClass = 'status-criacao';
+      } else if (statusProjeto.toLowerCase().includes('aprovação') || statusProjeto.toLowerCase().includes('aprovacao')) {
+        statusClass = 'status-aprovacao';
+      } else if (statusProjeto.toLowerCase().includes('entregue')) {
+        statusClass = 'status-entregue';
+      }
+      
+      document.getElementById('statusProjeto').innerHTML = 
+        '<span class="status-badge ' + statusClass + '">' + statusProjeto + '</span>';
+      
+      // Valores
+      document.getElementById('valorTotal').textContent = 
+        'R$ ' + Number(dadosCliente.valorTotal || 0).toFixed(2).replace('.', ',');
+      document.getElementById('valorPago').textContent = 
+        'R$ ' + Number(dadosCliente.valorPago || 0).toFixed(2).replace('.', ',');
+      document.getElementById('statusPagamento').textContent = 
+        dadosCliente.statusPagamento || '-';
+      
+      // Datas
+      document.getElementById('dataInicio').textContent = dadosCliente.dataInicio || '-';
+      document.getElementById('previsaoEntrega').textContent = dadosCliente.previsaoEntrega || '-';
+      
+      // Link do Convite (mostrar apenas se existir)
+      if (dadosCliente.linkConvite && dadosCliente.linkConvite !== "") {
+        document.getElementById('linkConviteContainer').style.display = 'block';
+        document.getElementById('linkConvite').href = dadosCliente.linkConvite;
+        document.getElementById('linkConvite').textContent = dadosCliente.linkConvite;
+      } else {
+        document.getElementById('linkConviteContainer').style.display = 'none';
+      }
+      
+      // Observações (mostrar apenas se existir)
+      if (dadosCliente.observacoes && dadosCliente.observacoes !== "") {
+        document.getElementById('observacoesContainer').style.display = 'block';
+        document.getElementById('observacoes').textContent = dadosCliente.observacoes;
+      } else {
+        document.getElementById('observacoesContainer').style.display = 'none';
+      }
+      
+      // Mostrar resultado
+      document.getElementById('formulario').style.display = 'none';
+      document.getElementById('resultado').style.display = 'block';
+      
+      console.log('Resultado exibido com sucesso!');
+    }
+    
+    function abrirWhatsApp() {
+      console.log('Abrindo WhatsApp...');
+      
+      if (!dadosCliente) {
+        console.error('Dados do cliente não disponíveis');
+        return;
+      }
+      
+      const nome = dadosCliente.nome || 'Cliente';
+      const tipoConvite = dadosCliente.tipoConvite || 'convite';
+      
+      const mensagem = 'Olá! Sou ' + nome + ' e gostaria de falar sobre o meu convite de ' + tipoConvite + '.';
+      const mensagemCodificada = encodeURIComponent(mensagem);
+      
+      const linkWhatsApp = 'https://wa.me/5511922298621?text=' + mensagemCodificada;
+      
+      console.log('Link do WhatsApp:', linkWhatsApp);
+      window.open(linkWhatsApp, '_blank');
+    }
+    
+    function mostrarErro(mensagem) {
+      console.error('Erro:', mensagem);
+      document.getElementById('erro').innerHTML = '<div class="erro">' + mensagem + '</div>';
+    }
+    
+    function voltar() {
+      console.log('Voltando para o formulário...');
+      document.getElementById('formulario').style.display = 'block';
+      document.getElementById('resultado').style.display = 'none';
+      document.getElementById('email').value = '';
+      document.getElementById('erro').innerHTML = '';
+      dadosCliente = null;
+    }
+  </script>
+</body>
+</html>
